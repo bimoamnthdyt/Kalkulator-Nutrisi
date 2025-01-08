@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Nutrisi </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #000000;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgb(132, 51, 255);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        select, input, button {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #451717;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: rgb(17, 15, 19);
+            color: white;
+            border: none;
+        }
+        .hasil {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e7f3e7;
+            border: 1px solid #d4edda;
+            border-radius: 5px;
+        }
+        .hasil p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <label for="jenis-makanan">Pilih Makanan</label>
+    <select id="jenis-makanan">
+        <option value="nasi">Nasi</option>
+        <option value="ayam">Ayam</option>
+        <option value="apel">Apel</option>
+        <option value="telur">Telur</option>
+        <option value="pisang">Pisang</option>
+        <option value="susu">Susu</option>
+        <option value="ikan">Ikan</option>
+        <option value="roti">Roti</option>
+        <option value="keju">Keju</option>
+        <option value="alpukat">Alpukat</option>
+    </select>
+
+    <label for="jumlah">Jumlah (gram/ml)</label>
+    <input type="number" id="jumlah">
+
+    <button onclick="hitungNutrisi()">Hitung Nutrisi</button>
+
+    <div class="hasil" id="hasil" style="display: none;">
+        <h3>Hasil Nutrisi:</h3>
+        <p id="protein"></p>
+        <p id="lemak"></p>
+        <p id="kalori"></p>
+        <p id="karbohidrat"></p>
+    </div>
+</div>
+
+<script>
+    const dataNutrisi = {
+        nasi: { kalori: 130, karbohidrat: 28, lemak: 0.3, protein: 2.7 },
+        ayam: { kalori: 165, karbohidrat: 0, lemak: 3.6, protein: 31 },
+        ikan: { kalori: 208, karbohidrat: 0, lemak: 13, protein: 20 },
+        apel: { kalori: 52, karbohidrat: 14, lemak: 0.2, protein: 0.3 },
+        pisang: { kalori: 96, karbohidrat: 27, lemak: 0.3, protein: 1.3 },
+        susu: { kalori: 42, karbohidrat: 5, lemak: 1, protein: 3.4 },
+        telur: { kalori: 155, karbohidrat: 1.1, lemak: 11, protein: 13 },
+        alpukat: { kalori: 160, karbohidrat: 9, lemak: 15, protein: 2 },
+        roti: { kalori: 265, karbohidrat: 49, lemak: 3.2, protein: 9 },
+        keju: { kalori: 402, karbohidrat: 1.3, lemak: 33, protein: 25 },
+    };
+
+    function hitungNutrisi() {
+        const jenisMakanan = document.getElementById('jenis-makanan').value;
+        const jumlah = parseFloat(document.getElementById('jumlah').value);
+        if (!jenisMakanan || isNaN(jumlah) || jumlah <= 0) {
+            alert('Masukkan data yang valid.');
+            return;
+        }
+
+        const nutrisi = dataNutrisi[jenisMakanan];
+        const faktor = jumlah / 100;
+        document.getElementById('protein').textContent = `Protein: ${(nutrisi.protein * faktor).toFixed(2)} g`;
+        document.getElementById('kalori').textContent = `Kalori: ${(nutrisi.kalori * faktor).toFixed(2)} kkal`;
+        document.getElementById('lemak').textContent = `Lemak: ${(nutrisi.lemak * faktor).toFixed(2)} g`;
+        document.getElementById('karbohidrat').textContent = `Karbohidrat: ${(nutrisi.karbohidrat * faktor).toFixed(2)} g`;
+        document.getElementById('hasil').style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
